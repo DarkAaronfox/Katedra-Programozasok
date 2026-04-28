@@ -1,0 +1,123 @@
+Verziókezelés
+
+Lineáris szoftverfejlesztés: Nehézkes visszatérni a régebbi verziókra
+Nem lineáris szoftverfejlesztés esetén előfordulhat, hogy a szoftver egyes tulajdonságain,
+képességein párhuzamosan, dolgozunk, hiszen nem biztos, hogy a végső is minden fejlesztett
+képességet látni akarunk.
+
+A kérdés az, hogy ezek a végén a végső verzióban hogyan lehet majd összemásolni.
+
+Központosított verziókezelő szoftver: Több programozó is dolgozhat ugyanazon a projekten. Ilyenkor
+egy központ tárhelyre (Central Repository) töltik fel, illetve töltik le onnan a fejlesztők az 
+aktuális verziót. Hátrányai: ha a központi tárhely valamiért nem elérhető. Ennek kiküszöbölésére
+született meg a megosztott verziókezelés elve.
+
+A megosztott verziókezelő szoftverek működése: Minden fejlesztőnek a sajuát gépén van egy lokális helyi
+tárhelye (Local Repository). Ezt rendszeresen szinkronizáni lell a 
+távoli tárhellyel (Remote Repository). A fejlesztől minden változtatást feltöltik a Remote Repositoryba.
+ilyen pl. a GIT
+
+GIT - GITHUB működése:
+A fejlesztő telepíti a saját számítógépére a GIT-et és minden projekt számára létrehoz egy
+local repositoryt. Majd később ezt feltölti egy Remote repositoryba (GITHUB).
+
+Előnyök:
+	Kód biztonságos működése
+	Több gépről dolgozhatunk ugyanazon a kódon
+	Verziókezelést tesz lehetővé
+	Megoszthatjuk másokkal a kódjainkat
+	többen is fejleszthetik ugyanazt a kódot
+
+GIT jellemzői:
+	Nyílt forráskódú verziókezelő szoftver
+	Nem lineáris szoftverfejlesztést tesz lehetővé
+	Lehet csak lokálisan is használni
+	Megosztott verziókezelés is megvalósítható vele
+	Használhatjuk parancssorból vagy kódszerkesztőből (IDE) vagy egyéb GIU programból
+
+GITHUB jellemzői:
+	Ingyenes verzió sok képességgel
+	Private/Public repository
+	Jelenleg a Microsoft tulajdonában van
+	Nagyon népszerű
+	Sok IDE-ben integráltan is benne van
+
+GIT alapfogalmak:
+Egy project könyvtárban, ahol azok az állományok vannak, amelyben a projektben dolgozunk,
+létrehozunk egy Local Repositoryt. Ez egy helyi adatbázis, ami tárolni fogja az ott lévő fájlok
+változását.
+
+Working directory (Copy): Ahová az állományokat menteni fogjuk
+
+Add parancs: Segítségével az adott állományokról készül egy úgynevezett SNAPSHOT (pillanatfelvétel)
+ami nem egyész állományt csak annak tartalmát rögzíti.
+
+Staging area (Cache/Index/Színpad): A pillanatfelvétel a Staging Areaba kerül.
+
+Commit parancs: Hatása a Stage-ből a Local Repositoryba kerül a snapshot, így lesz végleg rögzítve.
+
+Untracked (nem közvetett) fájlok: Ezek azok az állományok a prohjekt könyvtárban, amiről még soha nem készült snapshot.
+
+Tracked (követett) fájlok: amelyekről máőr legalább egyszer készült snapshot
+a) unmodified állapot: Már létezik róla snapshot, ami lementésre került a Local Repositoryba. De a legutolsó commit óta,
+nem történt benne változás
+b) modified állapot: Az unmodified állapotú állományban változtatunk, ekkor kerül modified állapotba
+c) staged állapot: A modified állapotról készül egy snapshot, amit bekerül a stage-be. Ha ekkor a commit paranccsal elmentjük
+Local Repositoryba, újra unmodified állapotba kerül.
+
+untracked
+
+tracked unmodified --> modified --> staged -
+	^				    |
+	|				    |
+        <------------------------------------
+
+Branch: Az az ág a fejlesztésben, amin éppen dolgozunk. Ha pl. szoftver több különböző funkciójának fejlesztése folyik, 
+párhuzamosan, több fejlesztő által, akkor több branch is létezhet. Amikor létrehozunk egy Local Repositoryt, akkor
+automatikusan létrejön egy fő ág is, egy fő branch, aminek a neve main vagy master branch.
+
+git init --> inicializálódik (létrejön) a .git mappa (rejtett)
+konfigurálás 3 szintje:
+--system: minden userre vonatkozik
+--global: az adott user minden git repositoryjára vonatkozik
+--local: egy adott repositoryra vonatkozik
+
+git config --local user.name "kovacs.aron"
+
+git config --local user.email "aaronkovacs09@gmail.com"
+
+git config --list --> Konfigurációs beállítások lekérése
+
+git config --list --show-origin --> Konfigurációs beállítások és az, hogy melyik állományban találhatóak
+
+git status --> az adott állományok státuszának lekérése
+
+git add 1_file.txt --> ennek hatására fog elkészülni a snapshot az állományról
+
+git commit 1_file.txt
+
+git commit -m "első mentés"
+
+git reset 1_file.txt --> ennek hatására a stage-ről visszatudjuk vonni az állományt
+(checkout)
+
+HEAD a legutolsó commit állapota
+
+Commit visszavonása:
+git reset --hard hash
+
+KIZÁRÁS A VERZIÓKÖVETÉSBŐL
+
+.gitignore (kiterjesztés nélküli!)
+Pl.
+config.c
+*.txt
+lib/
+[Ll]og
+
+GIT-GITHUB összekötése parancssorból:
+git remote add origin https://github.com/DarkAaronfox/GitTeszt.git
+git push -u origin master
+
+Github mappa klónozása (Github-->Lokális gépre)
+git clone https://github.com/DarkAaronfox/GitTeszt.git

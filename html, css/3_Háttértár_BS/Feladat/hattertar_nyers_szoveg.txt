@@ -1,0 +1,3 @@
+floppydisk.jpg
+Hajlékonylemez
+A hajlékonylemez egy mindkét oldalán mágnesezhető réteggel ellátott műanyagból készült korong. A külső fizikai behatásoktól egy tok védi meg, aminek a belső oldala a nagyobb méretű lemezeknél filc borítású. A lemezt a használathoz nem kell (és nem is lehet) kivenni a tokjából. Az író-olvasó fejnek és a lemez forgató mechanikának a megfelelő rések ki vannak vágva a tokon.
